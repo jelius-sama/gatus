@@ -6,15 +6,51 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
 import { Badge } from '@/components/ui/badge'
+import { computed, ref, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 const props = defineProps({
   status: {
     type: String,
     required: true,
     validator: (value) => ['healthy', 'unhealthy', 'degraded', 'unknown'].includes(value)
+  },
+  endpointKey: {
+    type: String,
+    required: false,
+    default: ''
   }
+})
+
+const route = useRoute()
+const isHomepage = computed(() => route.path === '/')
+const slaText = ref('')
+
+const fetchSla = async () => {
+  if (!isHomepage.value || !props.endpointKey) return
+
+  try {
+    const response = await fetch(`/api/v1/endpoints/${props.endpointKey}/uptimes/30d`)
+    const rawText = await response.text()
+    
+    const numValue = parseFloat(rawText.trim())
+    if (!isNaN(numValue)) {
+      // Formats 1.000000 to "100.00%" or 0.998700 to "99.87%"
+      slaText.value = `${(numValue * 100).toFixed(2)}%`
+    }
+  } catch (error) {
+    console.error('Failed to fetch SLA:', error)
+    slaText.value = ''
+  }
+}
+
+onMounted(() => {
+  fetchSla()
+})
+
+watch(() => props.endpointKey, (newKey) => {
+  if (newKey) fetchSla()
 })
 
 const variant = computed(() => {
@@ -30,7 +66,11 @@ const variant = computed(() => {
   }
 })
 
+// display label text or SLA override
 const label = computed(() => {
+  if (isHomepage.value && props.endpointKey && slaText.value) {
+    return slaText.value
+  }
   switch (props.status) {
     case 'healthy':
       return 'Healthy'
