@@ -12,7 +12,6 @@
 import { computed , ref, onMounted, watch} from 'vue'
 import { getStateColor } from '@/utils/color'
 import { useRoute } from 'vue-router'
-import { Badge } from '@/components/ui/badge'
 
 const props = defineProps({
   status: {
@@ -55,19 +54,6 @@ onMounted(() => {
 
 watch(() => props.endpointKey, (newKey) => {
   if (newKey) fetchSla()
-})
-
-const variant = computed(() => {
-  switch (props.status) {
-    case 'healthy':
-      return 'success'
-    case 'unhealthy':
-      return 'destructive'
-    case 'degraded':
-      return 'warning'
-    default:
-      return 'secondary'
-  }
 })
 
 // display label text or SLA override
