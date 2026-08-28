@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="flex-shrink-0 ml-2">
-          <StatusBadge :status="currentStatus" />
+          <StatusBadge :status="currentStatus" :endpointKey="toSlug(endpoint.group) + '_' + toSlug(endpoint.name)" />
         </div>
       </div>
     </CardHeader>
@@ -66,6 +66,8 @@ import { generatePrettyTimeAgo } from '@/utils/time'
 import { getResultColor } from '@/utils/color'
 
 const router = useRouter()
+
+const toSlug = (str) => str.toLowerCase().replace(/\s+/g, '-')
 
 const props = defineProps({
   endpoint: {
