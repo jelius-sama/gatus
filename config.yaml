@@ -1,3 +1,6 @@
+ui:
+  default-sort-by: group
+
 endpoints:
   - name: front-end
     group: core
