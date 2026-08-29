@@ -72,7 +72,6 @@ const label = computed(() => {
   return props.status.charAt(0).toUpperCase() + props.status.slice(1).replace(/_/g, ' ') // TODO: #227 Capitalize every word
 })
 
-
 const state = computed(() => {
   if (!props.status) return 'Unknown'
   return props.status.charAt(0).toUpperCase() + props.status.slice(1).replace(/_/g, ' ') // TODO: #227 Capitalize every word
