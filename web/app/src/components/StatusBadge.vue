@@ -11,7 +11,6 @@
               focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary
               text-primary-foreground hover:bg-primary/80 flex items-center gap-1 text-white ml-1"
        :style="`background-color: ${color};`">
-    <span :style="`background-color: ${color}; filter: brightness(115%)`" class="w-2 h-2 rounded-full"></span>
     {{ label }}
   </div>
 </template>
@@ -72,7 +71,6 @@ const label = computed(() => {
   if (!props.status) return 'Unknown'
   return props.status.charAt(0).toUpperCase() + props.status.slice(1).replace(/_/g, ' ') // TODO: #227 Capitalize every word
 })
-
 
 const state = computed(() => {
   if (!props.status) return 'Unknown'
