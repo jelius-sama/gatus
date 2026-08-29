@@ -1,58 +1,86 @@
 <template>
-  <Badge :variant="variant" class="flex items-center gap-1">
-    <span :class="['w-2 h-2 rounded-full', dotClass]"></span>
+  <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors
+              focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary
+              text-primary-foreground hover:bg-primary/80 flex items-center gap-1 text-white"
+       :style="`background-color: ${color};`">
+    <span :style="`background-color: ${color}; filter: brightness(115%)`" class="w-2 h-2 rounded-full"></span>
+    {{ state }}
+  </div>
+
+  <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors
+              focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary
+              text-primary-foreground hover:bg-primary/80 flex items-center gap-1 text-white ml-1"
+       :style="`background-color: ${color};`">
+    <span :style="`background-color: ${color}; filter: brightness(115%)`" class="w-2 h-2 rounded-full"></span>
     {{ label }}
-  </Badge>
+  </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { Badge } from '@/components/ui/badge'
+import { computed , ref, onMounted, watch} from 'vue'
+import { getStateColor } from '@/utils/color'
+import { useRoute } from 'vue-router'
 
 const props = defineProps({
   status: {
     type: String,
     required: true,
     validator: (value) => ['healthy', 'unhealthy', 'degraded', 'unknown'].includes(value)
+  },
+  endpointKey: {
+    type: String,
+    required: false,
+    default: ''
   }
 })
 
-const variant = computed(() => {
-  switch (props.status) {
-    case 'healthy':
-      return 'success'
-    case 'unhealthy':
-      return 'destructive'
-    case 'degraded':
-      return 'warning'
-    default:
-      return 'secondary'
+const route = useRoute()
+const isHomepage = computed(() => route.path === '/')
+const slaText = ref('')
+
+const fetchSla = async () => {
+  if (!isHomepage.value || !props.endpointKey) return
+
+  try {
+    const response = await fetch(`/api/v1/endpoints/${props.endpointKey}/uptimes/30d`)
+    const rawText = await response.text()
+    
+    const numValue = parseFloat(rawText.trim())
+    if (!isNaN(numValue)) {
+      // Formats 1.000000 to "100.00%" or 0.998700 to "99.87%"
+      slaText.value = `${(numValue * 100).toFixed(2)}%`
+    }
+  } catch (error) {
+    console.error('Failed to fetch SLA:', error)
+    slaText.value = ''
   }
+}
+
+onMounted(() => {
+  fetchSla()
 })
 
+watch(() => props.endpointKey, (newKey) => {
+  if (newKey) fetchSla()
+})
+
+// display label text or SLA override
 const label = computed(() => {
-  switch (props.status) {
-    case 'healthy':
-      return 'Healthy'
-    case 'unhealthy':
-      return 'Unhealthy'
-    case 'degraded':
-      return 'Degraded'
-    default:
-      return 'Unknown'
+  if (isHomepage.value && props.endpointKey && slaText.value) {
+    return slaText.value
   }
+  if (!props.status) return 'Unknown'
+  return props.status.charAt(0).toUpperCase() + props.status.slice(1).replace(/_/g, ' ') // TODO: #227 Capitalize every word
 })
 
-const dotClass = computed(() => {
-  switch (props.status) {
-    case 'healthy':
-      return 'bg-green-400'
-    case 'unhealthy':
-      return 'bg-red-400'
-    case 'degraded':
-      return 'bg-yellow-400'
-    default:
-      return 'bg-gray-400'
-  }
+
+const state = computed(() => {
+  if (!props.status) return 'Unknown'
+  return props.status.charAt(0).toUpperCase() + props.status.slice(1).replace(/_/g, ' ') // TODO: #227 Capitalize every word
+})
+
+const color = computed(() => {
+  if (!props.status) return window.config?.localStateColors.unknown
+  return getStateColor(props.status)
 })
 </script>
