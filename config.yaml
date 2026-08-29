@@ -13,6 +13,7 @@ states:
     priority: 1
 
 ui:
+  default-sort-by: group
   state-colors:
     degraded: "#FFA500"  # Orange color for degraded state
 
