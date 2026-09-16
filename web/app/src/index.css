@@ -4,48 +4,50 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Catppuccin Latte (Mauve) */
+    --background: 220 23% 95%;      /* Base */
+    --foreground: 234 16% 35%;      /* Text */
+    --card: 220 23% 95%;            /* Base */
+    --card-foreground: 234 16% 35%; /* Text */
+    --popover: 220 23% 95%;         /* Base */
+    --popover-foreground: 234 16% 35%; /* Text */
+    --primary: 266 85% 58%;         /* Mauve */
+    --primary-foreground: 220 23% 95%; /* Base */
+    --secondary: 223 16% 83%;       /* Surface0 */
+    --secondary-foreground: 234 16% 35%; /* Text */
+    --muted: 223 16% 83%;           /* Surface0 */
+    --muted-foreground: 233 10% 47%; /* Subtext0 */
+    --accent: 225 14% 77%;          /* Surface1 */
+    --accent-foreground: 234 16% 35%; /* Text */
+    --destructive: 347 87% 44%;     /* Red */
+    --destructive-foreground: 220 23% 95%; /* Base */
+    --border: 225 14% 77%;          /* Surface1 */
+    --input: 225 14% 77%;           /* Surface1 */
+    --ring: 266 85% 58%;            /* Mauve */
     --radius: 0.5rem;
   }
-  
+
   :root.dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    /* Catppuccin Mocha (Mauve) */
+    --background: 240 21% 15%;      /* Base */
+    --foreground: 226 64% 88%;      /* Text */
+    --card: 240 21% 15%;            /* Base */
+    --card-foreground: 226 64% 88%; /* Text */
+    --popover: 240 21% 15%;         /* Base */
+    --popover-foreground: 226 64% 88%; /* Text */
+    --primary: 267 84% 81%;         /* Mauve */
+    --primary-foreground: 240 21% 15%; /* Base */
+    --secondary: 237 16% 23%;       /* Surface0 */
+    --secondary-foreground: 226 64% 88%; /* Text */
+    --muted: 237 16% 23%;           /* Surface0 */
+    --muted-foreground: 228 24% 72%; /* Subtext0 */
+    --accent: 234 13% 31%;          /* Surface1 */
+    --accent-foreground: 226 64% 88%; /* Text */
+    --destructive: 343 81% 75%;     /* Red */
+    --destructive-foreground: 240 21% 15%; /* Base */
+    --border: 234 13% 31%;          /* Surface1 */
+    --input: 234 13% 31%;           /* Surface1 */
+    --ring: 267 84% 81%;            /* Mauve */
   }
 }
 
